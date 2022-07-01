@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {Button} from "./Button/Button";
 import {SettingsComponents} from "./SettingsComponents/SettingsComponents";
@@ -6,45 +6,19 @@ import {CounterComponents} from "./CounterComponents/CounterComponents";
 
 function App() {
 
-    const [max, setMax] = useState(0)
-    const [start, setStart] = useState(0)
+    const maxValue = Number(localStorage.getItem('counterValueMax'))
+    const startValue = Number(localStorage.getItem('counterValueStart'))
+
+    const [max, setMax] = useState(maxValue)
+    const [start, setStart] = useState(startValue)
     let [counter, setCounter] = useState(0)
 
-    const setToLocalStorageMax = () => {
-        localStorage.setItem('counterValueMax', JSON.stringify(max)) // преобразовывает в стринг
+    const setToLocalStorage = () => {
+        localStorage.setItem('counterValueMax', JSON.stringify(max))
+        localStorage.setItem('counterValueStart', JSON.stringify(start))
     }
 
-    const setToLocalStorageMStart = () => {
-        localStorage.setItem('counterValueStart', JSON.stringify(start)) // преобразовывает в стринг
-    }
 
-    const setLocalStorage = () => {
-        setToLocalStorageMStart()
-        setToLocalStorageMax()
-    }
-
-    const getToLocalStorageMax = () => {
-        let valueString = localStorage.getItem('counterValueMax')
-        if (valueString) {
-            let newValue = JSON.parse(valueString)
-            debugger
-            setMax(newValue)
-        }
-    }
-
-    const getToLocalStorageStart = () => {
-        let valueString = localStorage.getItem('counterValueStart')
-        if (valueString) {
-            let newValue = JSON.parse(valueString)
-            debugger
-            setMax(newValue)
-        }
-    }
-
-    const getLocalStorage = () => {
-        getToLocalStorageMax()
-        getToLocalStorageStart()
-    }
 
     const incCounter = () => {
         setCounter(++counter)
@@ -71,8 +45,7 @@ function App() {
                     setMaxValue={setMaxValue}
                     setMinValue={setMinValue}
                 />
-                <Button name={'Set'} callback={setLocalStorage}/>
-                <Button name={'Get'} callback={getLocalStorage}/>
+                <Button name={'Set'} callback={setToLocalStorage}/>
             </div>
             <div>
                 <CounterComponents counter={counter}

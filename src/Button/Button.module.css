@@ -1,0 +1,12 @@
+.buttonSet{
+    margin-top: 5px;
+    text-align: center;
+}
+
+.buttonSet button{
+    width: 90px;
+    height: 50px;
+    border: none;
+    background-color: cornflowerblue;
+    font-size: 25px;
+}
